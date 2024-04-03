@@ -126,7 +126,8 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
     private func stringsAndFretsLayer(fretConfig: LineConfig, stringConfig: LineConfig, origin: CGPoint, forScreen: Bool) -> CAShapeLayer {
         let layer = CAShapeLayer()
 
-        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+//        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+        let primaryColor = forScreen ? SWIFTColor.white.cgColor : SWIFTColor.black.cgColor
 
         // Strings
         let stringPath = CGMutablePath()
@@ -189,7 +190,8 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 
     private func nameLayer(fretConfig: LineConfig, origin: CGPoint, center: CGFloat, forScreen: Bool, name: Chords.Name) -> CAShapeLayer {
 
-        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+//        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+        let primaryColor = forScreen ? SWIFTColor.white.cgColor : SWIFTColor.black.cgColor
 
         var displayKey: String {
             switch name.key {
@@ -226,8 +228,10 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
     private func barreLayer(fretConfig: LineConfig, stringConfig: LineConfig, origin: CGPoint, showFingers: Bool, forScreen: Bool) -> CAShapeLayer {
         let layer = CAShapeLayer()
 
-        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
-        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
+//        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+//        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
+        let primaryColor = forScreen ? SWIFTColor.white.cgColor : SWIFTColor.black.cgColor
+        let backgroundColor = forScreen ? SWIFTColor.black.cgColor : SWIFTColor.white.cgColor
 
         for barre in barres {
             let barrePath = CGMutablePath()
@@ -288,8 +292,10 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
     private func dotsLayer(stringConfig: LineConfig, fretConfig: LineConfig, origin: CGPoint, showFingers: Bool, forScreen: Bool, rect: CGRect, mirror: Bool) -> CAShapeLayer {
         let layer = CAShapeLayer()
 
-        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
-        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
+//        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+//        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
+        let primaryColor = forScreen ? SWIFTColor.white.cgColor : SWIFTColor.black.cgColor
+        let backgroundColor = forScreen ? SWIFTColor.black.cgColor : SWIFTColor.white.cgColor
 
         for index in 0..<frets.count {
             let fret = frets[index]
