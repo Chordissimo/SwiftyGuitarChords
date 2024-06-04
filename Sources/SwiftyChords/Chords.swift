@@ -208,17 +208,17 @@ public struct Chords {
             case .thirteen:
                 return (" thirteen", "13", "¹³", "¹³")
             case .majorSeven:
-                return (" major seven", "Maj7", "Maj⁷", "M⁷")
+                return (" major seven", "maj7", "maj⁷", "M⁷")
             case .majorSevenFlatFive:
-                return (" major seven flat five", "Maj7b5", "Maj⁷♭⁵", "M⁷♭⁵")
+                return (" major seven flat five", "maj7b5", "maj⁷♭⁵", "M⁷♭⁵")
             case .majorSevenSharpFive:
-                return (" major seven sharp five", "Maj7#5", "Maj⁷♯⁵", "M⁷♯⁵")
+                return (" major seven sharp five", "maj7#5", "maj⁷♯⁵", "M⁷♯⁵")
             case .majorNine:
-                return (" major nine", "Maj9", "Maj⁹", "M⁹")
+                return (" major nine", "maj9", "maj⁹", "M⁹")
             case .majorEleven:
-                return (" major eleven", "Maj11", "Maj¹¹", "M¹¹")
+                return (" major eleven", "maj11", "maj¹¹", "M¹¹")
             case .majorThirteen:
-                return (" major thirteen", "Maj13", "Maj¹³", "M¹³")
+                return (" major thirteen", "maj13", "maj¹³", "M¹³")
             case .minorSix:
                 return (" minor six", "m6", "m⁶", "m⁶")
             case .minorSixNine:
