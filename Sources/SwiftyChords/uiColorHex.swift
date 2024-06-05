@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIColor {
-    public convenience init?(hex: String) {
+    public convenience init(hex: String) {
         let r, g, b, a: CGFloat
 
         if hex.hasPrefix("#") {
@@ -24,6 +24,6 @@ extension UIColor {
             }
         }
 
-        return nil
+        return UIColor.white
     }
 }
