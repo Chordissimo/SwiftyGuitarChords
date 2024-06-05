@@ -309,7 +309,7 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 //        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
         let dotLabelColor = forScreen ? dotLabelColor?.cgColor : SWIFTColor.black.cgColor
         let dotColor = forScreen ? dotColor?.cgColor : SWIFTColor.white.cgColor
-        let labelColor = forScreen ? labelColor?.cgColor : SWIFTColor.white.cgColor
+        let primaryColor = forScreen ? primaryColor?.cgColor : SWIFTColor.white.cgColor
 
         for index in 0..<frets.count {
             let fret = frets[index]
@@ -360,7 +360,7 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
                 crossLayer.lineWidth = fretConfig.spacing / 24
 
 //                crossLayer.strokeColor = primaryColor
-                crossLayer.strokeColor = labelColor
+                crossLayer.strokeColor = primaryColor
 
                 layer.addSublayer(crossLayer)
 
@@ -391,7 +391,7 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 
             let dotLayer = CAShapeLayer()
             dotLayer.path = dotPath
-            dotLayer.fillColor = primaryColor
+            dotLayer.fillColor = dotColor
 
             layer.addSublayer(dotLayer)
 
