@@ -105,6 +105,16 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
         let stringConfig = LineConfig(spacing: stringSpacing, margin: stringMargin, length: stringLength, count: ChordPosition.numberOfStrings)
 
         let layer = CAShapeLayer()
+        let bgPath = CGMutablePath()
+        bgPath.move(to: CGPoint(x: (scale - fretLength) / 2, y: (newHeight - stringLength) / 2))
+        bgPath.addLine(to: CGPoint(x: (scale + fretLength) / 2, y: (newHeight - stringLength) / 2))
+        bgPath.addLine(to: CGPoint(x: (scale + fretLength) / 2, y: (newHeight + stringLength) / 2))
+        bgPath.addLine(to: CGPoint(x: (scale - fretLength) / 2, y: (newHeight + stringLength) / 2))
+        bgPath.addLine(to: CGPoint(x: (scale - fretLength) / 2, y: (newHeight - stringLength) / 2))
+
+        layer.path = bgPath
+        layer.fillColor = backgroundColor?.cgColor
+
         let stringsAndFrets = stringsAndFretsLayer(fretConfig: fretConfig, stringConfig: stringConfig, origin: origin, forScreen: forScreen)
         let barre = barreLayer(fretConfig: fretConfig, stringConfig: stringConfig, origin: origin, showFingers: showFingers, forScreen: forScreen)
         let dots = dotsLayer(stringConfig: stringConfig, fretConfig: fretConfig, origin: origin, showFingers: showFingers, forScreen: forScreen, rect: rect, mirror: mirror)
@@ -119,16 +129,17 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
         }
 
         layer.frame = CGRect(x: 0, y: 0, width: scale, height: newHeight)
-
+        
         return layer
     }
 
     private func stringsAndFretsLayer(fretConfig: LineConfig, stringConfig: LineConfig, origin: CGPoint, forScreen: Bool) -> CAShapeLayer {
         let layer = CAShapeLayer()
 
-//        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
+        let primaryColor = forScreen ? primaryColor?.cgColor : SWIFTColor.black.cgColor
         let stringColor = forScreen ? stringColor?.cgColor : SWIFTColor.black.cgColor
         let fretColor = forScreen ? fretColor?.cgColor : SWIFTColor.black.cgColor
+        let nutColor = forScreen ? nutColor?.cgColor : SWIFTColor.black.cgColor
 
         // Strings
         let stringPath = CGMutablePath()
@@ -162,14 +173,14 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
             // Draw fret number
             if baseFret != 1 {
                 let txtLayer = CAShapeLayer()
-                let txtFont = SWIFTFont.systemFont(ofSize: fretConfig.margin * 0.5)
+                let txtFont = SWIFTFont.systemFont(ofSize: fretConfig.margin * 0.7)
+//                let txtFont = SWIFTFont.systemFont(ofSize: fretConfig.margin * 0.5)
                 let txtRect = CGRect(x: 0, y: 0, width: stringConfig.margin, height: fretConfig.spacing)
-                let transX = stringConfig.margin / 5 + origin.x
+                let transX = stringConfig.margin / 10 + origin.x
                 let transY = origin.y + (fretConfig.spacing / 2) + fretConfig.margin
                 let txtPath = "\(baseFret)".path(font: txtFont, rect: txtRect, position: CGPoint(x: transX, y: transY))
                 txtLayer.path = txtPath
-//                txtLayer.fillColor = primaryColor
-                txtLayer.fillColor = fretColor
+                txtLayer.fillColor = primaryColor
                 fretLayer.addSublayer(txtLayer)
             }
 
@@ -178,13 +189,13 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
             fretPath.move(to: CGPoint(x: x, y: y))
             fretPath.addLine(to: CGPoint(x: fretConfig.length + x, y: y))
 
-            let fret = CAShapeLayer()
-            fret.path = fretPath
-            fret.lineWidth = lineWidth
-            fret.lineCap = .square
-//            fret.strokeColor = primaryColor
-            fret.strokeColor = fretColor
-            fretLayer.addSublayer(fret)
+            let fretSubLayer = CAShapeLayer()
+            fretSubLayer.path = fretPath
+            fretSubLayer.lineWidth = lineWidth
+            fretSubLayer.lineCap = .square
+//            fretSubLayer.strokeColor = primaryColor
+            fretSubLayer.strokeColor = baseFret == 1 && fret == 0 ? nutColor : fretColor
+            fretLayer.addSublayer(fretSubLayer)
         }
 
         layer.addSublayer(fretLayer)
@@ -236,14 +247,6 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 //        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
         let dotColor = forScreen ? dotColor?.cgColor : SWIFTColor.black.cgColor
         let backgroundColor = forScreen ? backgroundColor?.cgColor : SWIFTColor.white.cgColor
-
-        //        let primaryColor = UIColor(rgb: 0x454647)
-        //        let backgroundColor = UIColor(rgb: 0x303133)
-        //        let stringColor = UIColor(rgb: 0x6E6F70)
-        //        let fretColor = UIColor(rgb: 0x1D1D1D)
-        //        let nutColor = UIColor(rgb: 0x929394)
-        //        let dotColor = UIColor(rgb: 0x19C63E)
-        //        let dotLabelColor = UIColor(rgb: 0x121212)
         
         for barre in barres {
             let barrePath = CGMutablePath()
