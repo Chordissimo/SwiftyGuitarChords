@@ -182,7 +182,8 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
             fret.path = fretPath
             fret.lineWidth = lineWidth
             fret.lineCap = .square
-            fret.strokeColor = primaryColor
+//            fret.strokeColor = primaryColor
+            fret.strokeColor = fretColor
             fretLayer.addSublayer(fret)
         }
 
