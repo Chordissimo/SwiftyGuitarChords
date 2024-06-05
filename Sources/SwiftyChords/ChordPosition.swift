@@ -127,8 +127,8 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
         let layer = CAShapeLayer()
 
 //        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
-        let stringColor = forScreen ? stringColor.cgColor : SWIFTColor.black.cgColor
-        let fretColor = forScreen ? fretColor.cgColor : SWIFTColor.black.cgColor
+        let stringColor = forScreen ? stringColor?.cgColor : SWIFTColor.black.cgColor
+        let fretColor = forScreen ? fretColor?.cgColor : SWIFTColor.black.cgColor
 
         // Strings
         let stringPath = CGMutablePath()
@@ -233,8 +233,8 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 
 //        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
 //        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
-        let dotColor = forScreen ? dotColor.cgColor : SWIFTColor.black.cgColor
-        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
+        let dotColor = forScreen ? dotColor?.cgColor : SWIFTColor.black.cgColor
+        let backgroundColor = forScreen ? backgroundColor?.cgColor : SWIFTColor.white.cgColor
 
         //        let primaryColor = UIColor(rgb: 0x454647)
         //        let backgroundColor = UIColor(rgb: 0x303133)
@@ -306,9 +306,9 @@ public struct ChordPosition: Codable, Identifiable, Equatable {
 
 //        let primaryColor = forScreen ? primaryColor.cgColor : SWIFTColor.black.cgColor
 //        let backgroundColor = forScreen ? backgroundColor.cgColor : SWIFTColor.white.cgColor
-        let dotLabelColor = forScreen ? dotLabelColor.cgColor : SWIFTColor.black.cgColor
-        let dotColor = forScreen ? dotColor.cgColor : SWIFTColor.white.cgColor
-        let labelColor = forScreen ? labelColor.cgColor : SWIFTColor.white.cgColor
+        let dotLabelColor = forScreen ? dotLabelColor?.cgColor : SWIFTColor.black.cgColor
+        let dotColor = forScreen ? dotColor?.cgColor : SWIFTColor.white.cgColor
+        let labelColor = forScreen ? labelColor?.cgColor : SWIFTColor.white.cgColor
 
         for index in 0..<frets.count {
             let fret = frets[index]
