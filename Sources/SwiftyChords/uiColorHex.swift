@@ -24,6 +24,6 @@ extension UIColor {
             }
         }
 
-        return UIColor.white
+        return nil
     }
 }
