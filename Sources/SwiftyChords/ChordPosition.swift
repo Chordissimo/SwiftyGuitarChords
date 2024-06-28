@@ -14,7 +14,14 @@ import AppKit
 import UIKit
 #endif
 
-public struct ChordPosition: Codable, Identifiable, Equatable {
+public struct ChordPosition: Codable, Identifiable, Equatable, Hashable {
+    static func == (lhs: ChordPosition, rhs: ChordPosition) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 
     public init(id: UUID = UUID(), frets: [Int], fingers: [Int], baseFret: Int, barres: [Int], capo: Bool? = nil, midi: [Int], key: Chords.Key, suffix: Chords.Suffix) {
         self.id = id
