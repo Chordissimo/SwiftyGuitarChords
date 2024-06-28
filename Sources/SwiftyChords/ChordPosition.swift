@@ -15,11 +15,11 @@ import UIKit
 #endif
 
 public struct ChordPosition: Codable, Identifiable, Equatable, Hashable {
-    static func == (lhs: ChordPosition, rhs: ChordPosition) -> Bool {
+    public static func == (lhs: ChordPosition, rhs: ChordPosition) -> Bool {
         lhs.id == rhs.id
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 
