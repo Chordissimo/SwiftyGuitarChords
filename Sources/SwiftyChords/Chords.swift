@@ -392,6 +392,7 @@ public struct Chords {
             print("Invalid URL: \(urlString)")
             #endif
             completion([])
+            return
         }
         
         let request = URLRequest(url: url)
@@ -401,6 +402,7 @@ public struct Chords {
                 print(error?.localizedDescription ?? "Unknown Error")
                 #endif
                 completion([])
+                return
             }
             
             do {
