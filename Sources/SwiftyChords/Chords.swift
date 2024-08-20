@@ -382,11 +382,13 @@ public struct Chords {
             result = readDataFormBundle(for: name)
         } else {
             Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
-                if chordPositions.count > 0 {
-                    result = chordPositions
-                    #if DEBUG
-                    print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
-                    #endif
+                DispatchQueue.main.async {
+                    if chordPositions.count > 0 {
+                        result = chordPositions
+                        #if DEBUG
+                        print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
+                        #endif
+                    }
                 }
             }
         }
@@ -425,10 +427,8 @@ public struct Chords {
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
-                        DispatchQueue.main.async {
-                            let result = try JSONDecoder().decode([ChordPosition].self, from: data)
-                            completion(result)
-                        }
+                        let result = try JSONDecoder().decode([ChordPosition].self, from: data)
+                        completion(result)
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
