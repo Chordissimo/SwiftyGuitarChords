@@ -421,6 +421,7 @@ public struct Chords {
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                print(error)
                 if let data = data {
                     do {
                         let result = try JSONDecoder().decode([ChordPosition].self, from: data)
