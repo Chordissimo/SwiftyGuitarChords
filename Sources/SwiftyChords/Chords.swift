@@ -423,7 +423,7 @@ public struct Chords {
         var result: [ChordPosition] = []
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
-            URLSession.shared.dataTask(with: request) { data, response, error in
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
                         result = try JSONDecoder().decode([ChordPosition].self, from: data)
@@ -438,12 +438,13 @@ public struct Chords {
                     #endif
                 }
             }
+            completion(result)
+            task.resume()
         } else {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
         }
-        completion(result)
     }
     
 }
