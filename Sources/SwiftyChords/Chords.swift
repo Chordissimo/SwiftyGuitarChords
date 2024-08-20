@@ -391,7 +391,7 @@ public struct Chords {
             }
         }
         
-        if chordPositions.count == 0 {
+        if result.count == 0 {
             result = readDataFormBundle(for: name)
             #if DEBUG
             print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
