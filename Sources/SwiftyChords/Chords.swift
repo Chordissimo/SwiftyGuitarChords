@@ -353,6 +353,7 @@ public struct Chords {
         var result: [ChordPosition] = []
         @AppStorage("baseUrl") var baseUrl: String = ""
         if baseUrl == "" {
+            print("Base url is not set")
             result = readDataFormBundle(for: name)
         } else {
             Chords.loadRemoteJSON(baseUrl + "/" + name) { chordPositions in
