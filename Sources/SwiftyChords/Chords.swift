@@ -381,8 +381,8 @@ public struct Chords {
             #endif
             result = readDataFormBundle(for: name)
         } else {
-            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                     if chordPositions.count > 0 {
                         result = chordPositions
                         #if DEBUG
