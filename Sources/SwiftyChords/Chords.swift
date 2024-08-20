@@ -351,7 +351,21 @@ public struct Chords {
 
     private static func readData(for name: String) -> [ChordPosition] {
         var result: [ChordPosition] = []
-        @AppStorage("baseUrl") var baseUrl: String = ""
+        var baseUrl: String = ""
+        
+        struct Plist: Decodable {
+            var CHORDS_JSON_BASE_URL: String = ""
+            enum CodingKeys: String, CodingKey {
+                case CHORDS_JSON_BASE_URL
+        }
+        
+        if let path = Bundle.main.path(forResource: "RemoteJsonUrl-Info", ofType: "plist") {
+            let plistUrl = URL(fileURLWithPath: path)
+            let data = try Data(contentsOf: plistUrl)
+            let plist = try PropertyListDecoder().decode(Plist.self, from: data)
+            baseUrl = plist.CHORDS_JSON_BASE_URL
+        }
+
         if baseUrl == "" {
             print("Base url is not set")
             result = readDataFormBundle(for: name)
