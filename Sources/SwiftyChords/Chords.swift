@@ -359,7 +359,7 @@ public struct Chords {
                 if chordPositions.count == 0 {
                     result = readDataFormBundle(for: name)
                     #if DEBUG
-                    print("Successfully read from \(baseUrl) + "/" + \(name), chords count:", result.count)
+                    print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
                     #endif
                 } else {
                     result = chordPositions
