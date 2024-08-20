@@ -360,19 +360,22 @@ public struct Chords {
             }
         }
         
-        if let path = Bundle.main.path(forResource: "RemoteJsonUrl-Info", ofType: "plist") {
+        do {
             print("before plist")
-            do {
-                let plistUrl = URL(fileURLWithPath: path)
+            var plistUrl = Bundle.module.resourceURL
+            plistUrl?.appendPathComponent("RemoteJsonUrl-Info")
+            plistUrl?.appendPathExtension("json")
+            if let path = plistUrl {
                 let data = try Data(contentsOf: plistUrl)
                 let plist = try PropertyListDecoder().decode(Plist.self, from: data)
                 baseUrl = plist.CHORDS_JSON_BASE_URL
-            } catch {
-                #if DEBUG
-                print("Can't read from \(baseUrl)/\(name)")
-                #endif
             }
+        } catch {
+            #if DEBUG
+            print("Can't read base url from RemoteJsonUrl-Info.plist. File not found.")
+            #endif
         }
+        
         print("base url:",baseUrl)
         if baseUrl == "" {
             print("Base url is not set")
