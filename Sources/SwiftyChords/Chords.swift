@@ -351,7 +351,7 @@ public struct Chords {
 
     private static func readData(for name: String) -> [ChordPosition] {
         var result: [ChordPosition] = []
-        @AppStorage("baseUrl") var baseUrl: String = ""
+        @AppStorage("baseUrl") let baseUrl: String = ""
         if baseUrl == "" {
             result = readDataFormBundle(for: name)
         } else {
@@ -385,8 +385,6 @@ public struct Chords {
     }
     
     private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
-        let data: Data
-        
         if let url = URL(string: urlString) else {
             let request = URLRequest(url: url)
             URLSession.shared.dataTask(with: request) { data, response, error in
