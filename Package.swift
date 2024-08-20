@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftyChords",
-    platforms: [.iOS(.v13), .macOS(.v11)],
+    platforms: [.iOS(.v14), .macOS(.v11)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
