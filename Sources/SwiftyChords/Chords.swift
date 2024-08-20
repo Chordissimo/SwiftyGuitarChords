@@ -364,7 +364,7 @@ public struct Chords {
             print("before plist")
             var plistUrl = Bundle.module.resourceURL
             plistUrl?.appendPathComponent("RemoteJsonUrl-Info")
-            plistUrl?.appendPathExtension("json")
+            plistUrl?.appendPathExtension("plist")
             if let path = plistUrl {
                 let data = try Data(contentsOf: path)
                 let plist = try PropertyListDecoder().decode(Plist.self, from: data)
@@ -378,7 +378,9 @@ public struct Chords {
         
         print("base url:",baseUrl)
         if baseUrl == "" {
+            #if DEBUG
             print("Base url is not set")
+            #endif
             result = readDataFormBundle(for: name)
         } else {
             Chords.loadRemoteJSON(baseUrl + "/" + name) { chordPositions in
