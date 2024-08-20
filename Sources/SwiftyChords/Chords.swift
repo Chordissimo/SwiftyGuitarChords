@@ -427,6 +427,9 @@ public struct Chords {
                 if let data = data {
                     do {
                         result = try JSONDecoder().decode([ChordPosition].self, from: data)
+                        print(result,"\n-----------")
+                        print(response,"\n--------")
+                        print(data)
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
