@@ -395,7 +395,7 @@ public struct Chords {
                 }
             }
         }
-                
+        print(result.count)
         return result
     }
     
