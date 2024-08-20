@@ -387,15 +387,16 @@ public struct Chords {
                     #if DEBUG
                     print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
                     #endif
-                } else {
-                    result = readDataFormBundle(for: name)
-                    #if DEBUG
-                    print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
-                    #endif
                 }
             }
         }
-        print(result.count)
+        if result.count == 0 {
+            result = readDataFormBundle(for: name)
+            #if DEBUG
+            print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+            #endif
+        }
+
         return result
     }
     
