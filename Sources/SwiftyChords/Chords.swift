@@ -387,34 +387,33 @@ public struct Chords {
     private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
         let data: Data
         
-        guard let url = URL(string: urlString) else {
+        if let url = URL(string: urlString) else {
+            let request = URLRequest(url: url)
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data {
+                    do {
+                        let data = try JSONDecoder().decode([ChordPosition].self, from: data)
+                        completion(data)
+                    } catch {
+                        #if DEBUG
+                        print("Couldn't parse data from \(urlString)\n\(error)")
+                        #endif
+                        completion([])
+                    }
+                } else {
+                    #if DEBUG
+                    print(error?.localizedDescription ?? "Unknown Error")
+                    #endif
+                    completion([])
+                }
+            }
+        } else {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
             completion([])
-            return
         }
         
-        let request = URLRequest(url: url)
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                #if DEBUG
-                print(error?.localizedDescription ?? "Unknown Error")
-                #endif
-                completion([])
-                return
-            }
-            
-            do {
-                let data = try JSONDecoder().decode([ChordPosition].self, from: data)
-                completion(data)
-            } catch {
-                #if DEBUG
-                print("Couldn't parse data from \(urlString)\n\(error)")
-                #endif
-                completion([])
-            }
-        }
     }
     
 }
