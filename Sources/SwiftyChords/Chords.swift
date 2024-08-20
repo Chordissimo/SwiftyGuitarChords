@@ -390,6 +390,7 @@ public struct Chords {
                 }
             }
         }
+        
         if result.count == 0 {
             result = readDataFormBundle(for: name)
             #if DEBUG
@@ -422,11 +423,12 @@ public struct Chords {
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                print(error)
                 if let data = data {
                     do {
-                        let result = try JSONDecoder().decode([ChordPosition].self, from: data)
-                        completion(result)
+                        DispatchQueue.main.async {
+                            let result = try JSONDecoder().decode([ChordPosition].self, from: data)
+                            completion(result)
+                        }
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
