@@ -357,6 +357,7 @@ public struct Chords {
             var CHORDS_JSON_BASE_URL: String = ""
             enum CodingKeys: String, CodingKey {
                 case CHORDS_JSON_BASE_URL
+            }
         }
         
         if let path = Bundle.main.path(forResource: "RemoteJsonUrl-Info", ofType: "plist") {
