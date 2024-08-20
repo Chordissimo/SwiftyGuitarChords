@@ -361,6 +361,7 @@ public struct Chords {
         }
         
         if let path = Bundle.main.path(forResource: "RemoteJsonUrl-Info", ofType: "plist") {
+            print("before plist")
             do {
                 let plistUrl = URL(fileURLWithPath: path)
                 let data = try Data(contentsOf: plistUrl)
@@ -372,7 +373,7 @@ public struct Chords {
                 #endif
             }
         }
-
+        print("base url:",baseUrl)
         if baseUrl == "" {
             print("Base url is not set")
             result = readDataFormBundle(for: name)
