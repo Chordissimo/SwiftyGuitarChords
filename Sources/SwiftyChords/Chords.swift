@@ -349,6 +349,23 @@ public struct Chords {
     public static var ukulele = Chords.readData(for: "UkuleleChords")
 
     private static func readData(for name: String) -> [ChordPosition] {
+        var result: [ChordPosition] = []
+        @AppStorage("baseUrl") var baseUrl: String = ""
+        if baseUrl == "" {
+            result = readDataFormBundle(for: name)
+        } else {
+            Chords.loadRemoteJSON(baseUrl + "/" + name) { chordPositions in
+                if chordPositions.count == 0 {
+                    result = readDataFormBundle(for: name)
+                } else {
+                    result = chordPositions
+                }
+            }
+        }
+        return result
+    }
+    
+    private static func readDataFormBundle(for name: String) -> [ChordPosition] {
         do {
             var resourceUrl = Bundle.module.resourceURL
             resourceUrl?.appendPathComponent(name)
@@ -364,6 +381,37 @@ public struct Chords {
             #endif
         }
         return []
+    }
+    
+    private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
+        let data: Data
+        
+        guard let url = URL(string: urlString) else {
+            #if DEBUG
+            print("Invalid URL: \(urlString)")
+            #endif
+            completion([])
+        }
+        
+        let request = URLRequest(url: url)
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                #if DEBUG
+                print(error?.localizedDescription ?? "Unknown Error")
+                #endif
+                completion([])
+            }
+            
+            do {
+                let data = try JSONDecoder().decode([ChordPosition].self, from: data)
+                completion(data)
+            } catch {
+                #if DEBUG
+                print("Couldn't parse data from \(urlString)\n\(error)")
+                #endif
+                completion([])
+            }
+        }
     }
     
 }
