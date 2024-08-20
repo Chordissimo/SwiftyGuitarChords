@@ -377,17 +377,12 @@ public struct Chords {
         
         if baseUrl == "" {
             #if DEBUG
-            print("Base url is not set")
+            print("Base url is not set, loading chords from bundle...")
             #endif
             result = readDataFormBundle(for: name)
         } else {
             Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
-                if chordPositions.count == 0 {
-                    result = readDataFormBundle(for: name)
-                    #if DEBUG
-                    print("Couldn't read from \(baseUrl)/\(name).json. Loading chords from bundle...")
-                    #endif
-                } else {
+                if chordPositions.count > 0 {
                     result = chordPositions
                     #if DEBUG
                     print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
@@ -395,6 +390,14 @@ public struct Chords {
                 }
             }
         }
+        
+        if chordPositions.count == 0 {
+            result = readDataFormBundle(for: name)
+            #if DEBUG
+            print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+            #endif
+        }
+        
         return result
     }
     
@@ -417,33 +420,30 @@ public struct Chords {
     }
     
     private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
+        var result: [ChordPosition] = []
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
-                        let data = try JSONDecoder().decode([ChordPosition].self, from: data)
-                        completion(data)
+                        result = try JSONDecoder().decode([ChordPosition].self, from: data)
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
                         #endif
-                        completion([])
                     }
                 } else {
                     #if DEBUG
                     print(error?.localizedDescription ?? "Unknown Error")
                     #endif
-                    completion([])
                 }
             }
         } else {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
-            completion([])
         }
-        
+        completion(result)
     }
     
 }
