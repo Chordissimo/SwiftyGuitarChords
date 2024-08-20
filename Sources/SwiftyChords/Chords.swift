@@ -385,7 +385,7 @@ public struct Chords {
     }
     
     private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
-        if let url = URL(string: urlString) else {
+        if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
