@@ -351,7 +351,7 @@ public struct Chords {
 
     private static func readData(for name: String) -> [ChordPosition] {
         var result: [ChordPosition] = []
-        @AppStorage("baseUrl") let baseUrl: String = ""
+        @AppStorage("baseUrl") var baseUrl: String = ""
         if baseUrl == "" {
             result = readDataFormBundle(for: name)
         } else {
