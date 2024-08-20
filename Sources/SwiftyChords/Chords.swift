@@ -366,7 +366,7 @@ public struct Chords {
             plistUrl?.appendPathComponent("RemoteJsonUrl-Info")
             plistUrl?.appendPathExtension("json")
             if let path = plistUrl {
-                let data = try Data(contentsOf: plistUrl)
+                let data = try Data(contentsOf: path)
                 let plist = try PropertyListDecoder().decode(Plist.self, from: data)
                 baseUrl = plist.CHORDS_JSON_BASE_URL
             }
