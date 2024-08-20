@@ -381,14 +381,17 @@ public struct Chords {
             #endif
             result = readDataFormBundle(for: name)
         } else {
-            Chords.loadRemoteJSON(baseUrl + "/" + name) { chordPositions in
+            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                 if chordPositions.count == 0 {
                     result = readDataFormBundle(for: name)
                     #if DEBUG
-                    print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
+                    print("Couldn't read from \(baseUrl)/\(name).json. Loading chords from bundle...")
                     #endif
                 } else {
                     result = chordPositions
+                    #if DEBUG
+                    print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
+                    #endif
                 }
             }
         }
