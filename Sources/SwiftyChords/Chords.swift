@@ -361,7 +361,6 @@ public struct Chords {
         }
         
         do {
-            print("before plist")
             var plistUrl = Bundle.module.resourceURL
             plistUrl?.appendPathComponent("RemoteJsonUrl-Info")
             plistUrl?.appendPathExtension("plist")
@@ -376,7 +375,6 @@ public struct Chords {
             #endif
         }
         
-        print("base url:",baseUrl)
         if baseUrl == "" {
             #if DEBUG
             print("Base url is not set")
