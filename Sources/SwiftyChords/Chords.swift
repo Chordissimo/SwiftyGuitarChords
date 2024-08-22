@@ -355,6 +355,9 @@ public struct Chords {
             let resourceUrl = documentsPath.appendingPathComponent(name + ".json")
             let data = try Data(contentsOf: resourceUrl)
             let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
+            #if DEBUG
+            print("Loaded JSON from \(resourceUrl.absoluteString), chords count:", chordPositions.count)
+            #endif
             return allChords
         } catch {
             #if DEBUG
@@ -369,6 +372,9 @@ public struct Chords {
             if let fileUrl = resourceUrl {
                 let data = try Data(contentsOf: fileUrl)
                 let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
+                #if DEBUG
+                print("Loaded JSON from \(fileUrl.absoluteString), chords count:", chordPositions.count)
+                #endif
                 return allChords
             }
         } catch {
