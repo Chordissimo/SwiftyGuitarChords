@@ -351,10 +351,10 @@ public struct Chords {
 
     init() {
         Chords.readData(for: "GuitarChords") { chordPositions in
-            guitar = chordPositions
+            Chords.guitar = chordPositions
         }
         Chords.readData(for: "UkuleleChords") { chordPositions in
-            ukulele = chordPositions
+            Chords.ukulele = chordPositions
         }
     }
 
