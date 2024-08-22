@@ -392,7 +392,16 @@ public struct Chords {
             #endif
             return readDataFormBundle(for: name)
         } else {
-            return Chords.loadRemoteJSON(baseUrl + "/" + name + ".json")
+            let chordPositions = Chords.loadRemoteJSON(baseUrl + "/" + name + ".json")
+            if chordPositions.count == 0 {
+                result = readDataFormBundle(for: name)
+                #if DEBUG
+                print("Couldn't read from \(urlString). Request result is empty. Loading chords from bundle...")
+                #endif
+                return result
+            } else {
+                return chordPositions
+            }
         }
     }
     
@@ -423,7 +432,7 @@ public struct Chords {
                         let chordPositions = try JSONDecoder().decode([ChordPosition].self, from: data)
                         if chordPositions.count > 0 {
                             #if DEBUG
-                            print("Successfully loaded JSON from \(urlString), chords count:", result.count)
+                            print("Successfully loaded JSON from \(urlString), chords count:", chordPositions.count)
                             #endif
                             if chordPositions.count > 0 {
                                 let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
@@ -434,12 +443,6 @@ public struct Chords {
                                     print(error.localizedDescription)
                                 }
                                 return chordPositions
-                            } else {
-                                result = readDataFormBundle(for: name)
-                                #if DEBUG
-                                print("Couldn't read from \(urlString). Request result is empty. Loading chords from bundle...")
-                                #endif
-                                return result
                             }
                         }
                     } catch {
