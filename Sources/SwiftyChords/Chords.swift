@@ -356,7 +356,7 @@ public struct Chords {
             let data = try Data(contentsOf: resourceUrl)
             let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
             #if DEBUG
-            print("Loaded JSON from \(resourceUrl.absoluteString), chords count:", chordPositions.count)
+            print("Loaded JSON from \(resourceUrl.absoluteString), chords count:", allChords.count)
             #endif
             return allChords
         } catch {
@@ -373,7 +373,7 @@ public struct Chords {
                 let data = try Data(contentsOf: fileUrl)
                 let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
                 #if DEBUG
-                print("Loaded JSON from \(fileUrl.absoluteString), chords count:", chordPositions.count)
+                print("Loaded JSON from \(fileUrl.absoluteString), chords count:", allChords.count)
                 #endif
                 return allChords
             }
