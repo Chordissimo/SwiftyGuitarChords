@@ -349,17 +349,18 @@ public struct Chords {
     public static var guitar = Chords.readData(for: "GuitarChords")
     public static var ukulele = Chords.readData(for: "UkuleleChords")
 
-    private static func readData(for name: String) -> [ChordPosition] {
+    private static func readData(for name: String) async -> [ChordPosition] {
         var result: [ChordPosition] = []
         var baseUrl: String = ""
+        var result: [ChordPosition] = []
         
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let url = documentsPath.appendingPathComponent(name + ".json")
 
         do {
             let data = try Data(contentsOf: url)
-            let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
-            return allChords
+            result = try JSONDecoder().decode([ChordPosition].self, from: data)
+            return result
         } catch {
             print(error.localizedDescription)
         }
@@ -390,19 +391,21 @@ public struct Chords {
             #if DEBUG
             print("Base url is not set, loading chords from bundle...")
             #endif
-            return readDataFormBundle(for: name)
+            result = readDataFormBundle(for: name)
+            return result
         } else {
-            let chordPositions = Chords.loadRemoteJSON(baseUrl + "/" + name + ".json")
-            if chordPositions.count == 0 {
-                result = readDataFormBundle(for: name)
-                #if DEBUG
-                print("Couldn't read from \(urlString). Request result is empty. Loading chords from bundle...")
-                #endif
-                return result
-            } else {
-                return chordPositions
+            await Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
+                if chordPositions.count == 0 {
+                    result = readDataFormBundle(for: name)
+                    #if DEBUG
+                    print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+                    #endif
+                } else {
+                    result = chordPositions
+                }
             }
         }
+        return result
     }
     
     private static func readDataFormBundle(for name: String) -> [ChordPosition] {
@@ -423,7 +426,7 @@ public struct Chords {
         return []
     }
     
-    private static func loadRemoteJSON(_ urlString: String) -> [ChordPosition] {
+    private static func loadRemoteJSON(_ urlString: String, completion: @escaping ([ChordPosition]) -> Void) {
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -442,18 +445,20 @@ public struct Chords {
                                 } catch {
                                     print(error.localizedDescription)
                                 }
-                                return chordPositions
+                                completion(chordPositions)
                             }
                         }
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
                         #endif
+                        completion(chordPositions)
                     }
                 } else {
                     #if DEBUG
                     print(error?.localizedDescription ?? "Unknown Error")
                     #endif
+                    completion(chordPositions)
                 }
             }
             task.resume()
@@ -461,8 +466,8 @@ public struct Chords {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
+            completion(chordPositions)
         }
-        return []
     }
     
 }
