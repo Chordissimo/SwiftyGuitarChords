@@ -352,8 +352,8 @@ public struct Chords {
     private static func readData(for name: String) -> [ChordPosition] {
         do {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            var resourceUrl = documentsPath.appendingPathComponent(name + ".json")
-            if let fileUrl = resourceUrl {
+            let resourceUrl = documentsPath.appendingPathComponent(name + ".json")
+            if let fileUrl = resourceUrl? {
                 let data = try Data(contentsOf: fileUrl)
                 let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
                 return allChords
