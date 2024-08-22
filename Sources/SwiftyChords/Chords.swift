@@ -347,13 +347,15 @@ public struct Chords {
     }
     
     public static var guitar: [ChordPosition] = []
-    let _ = Chords.readData(for: "GuitarChords") { chordPositions in
-        guitar = chordPositions
-    }
-    
     public static var ukulele: [ChordPosition] = []
-    let _ = Chords.readData(for: "UkuleleChords") { chordPositions in
-        ukulele = chordPositions
+
+    init() {
+        Chords.readData(for: "GuitarChords") { chordPositions in
+            guitar = chordPositions
+        }
+        Chords.readData(for: "UkuleleChords") { chordPositions in
+            ukulele = chordPositions
+        }
     }
 
     private static func readData(for name: String, completion: @escaping ([ChordPosition]) -> Void) {
