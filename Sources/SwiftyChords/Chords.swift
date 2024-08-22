@@ -392,29 +392,7 @@ public struct Chords {
             #endif
             return readDataFormBundle(for: name)
         } else {
-            return Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
-                if chordPositions.count > 0 {
-                    #if DEBUG
-                    print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
-                    #endif
-                    if chordPositions.count > 0 {
-                        let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
-                        let data = Data(json.utf8)
-                        do {
-                            try data.write(to: url, options: [.atomic, .completeFileProtection])
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                        return chordPositions
-                    } else {
-                        result = readDataFormBundle(for: name)
-                        #if DEBUG
-                        print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
-                        #endif
-                        return result
-                    }
-                }
-            }
+            return Chords.loadRemoteJSON(baseUrl + "/" + name + ".json")
         }
     }
     
@@ -436,25 +414,43 @@ public struct Chords {
         return []
     }
     
-    private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> [ChordPosition])) {
+    private static func loadRemoteJSON(_ urlString: String) -> [ChordPosition] {
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
                         let result = try JSONDecoder().decode([ChordPosition].self, from: data)
-                        completion(result)
+                        if chordPositions.count > 0 {
+                            #if DEBUG
+                            print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
+                            #endif
+                            if chordPositions.count > 0 {
+                                let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
+                                let data = Data(json.utf8)
+                                do {
+                                    try data.write(to: url, options: [.atomic, .completeFileProtection])
+                                } catch {
+                                    print(error.localizedDescription)
+                                }
+                                return chordPositions
+                            } else {
+                                result = readDataFormBundle(for: name)
+                                #if DEBUG
+                                print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+                                #endif
+                                return result
+                            }
+                        }
                     } catch {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
                         #endif
-                        completion([])
                     }
                 } else {
                     #if DEBUG
                     print(error?.localizedDescription ?? "Unknown Error")
                     #endif
-                    completion([])
                 }
             }
             task.resume()
@@ -462,8 +458,8 @@ public struct Chords {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
-            completion([])
         }
+        return []
     }
     
 }
