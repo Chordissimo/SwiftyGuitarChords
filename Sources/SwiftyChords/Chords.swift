@@ -353,7 +353,7 @@ public struct Chords {
         do {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let resourceUrl = documentsPath.appendingPathComponent(name + ".json")
-            let data = try Data(contentsOf: fileUrl)
+            let data = try Data(contentsOf: resourceUrl)
             let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
             return allChords
         } catch {
