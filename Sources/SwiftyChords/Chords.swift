@@ -390,9 +390,9 @@ public struct Chords {
             #if DEBUG
             print("Base url is not set, loading chords from bundle...")
             #endif
-            result = readDataFormBundle(for: name)
+            return readDataFormBundle(for: name)
         } else {
-            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
+            return Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                 if chordPositions.count > 0 {
                     #if DEBUG
                     print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
@@ -436,7 +436,7 @@ public struct Chords {
         return []
     }
     
-    private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> Void)) {
+    private static func loadRemoteJSON(_ urlString: String, completion: @escaping  (([ChordPosition]) -> [ChordPosition])) {
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
