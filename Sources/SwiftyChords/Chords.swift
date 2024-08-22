@@ -346,21 +346,26 @@ public struct Chords {
         }
     }
     
-    public static var guitar = await Chords.readData(for: "GuitarChords")
-    public static var ukulele = await Chords.readData(for: "UkuleleChords")
+    public static var guitar: [ChordPosition] = []
+    Chords.readData(for: "GuitarChords") { chordPositions in
+        Chords.guitar = chordPositions
+    }
+    
+    public static var ukulele: [ChordPosition] = []
+    Chords.readData(for: "UkuleleChords") { chordPositions in
+        Chords.ukulele = chordPositions
+    }
 
-    private static func readData(for name: String) async -> [ChordPosition] {
-        var result: [ChordPosition] = []
+    private static func readData(for name: String, completion: @escaping ([ChordPosition]) -> Void) {
         var baseUrl: String = ""
-        var result: [ChordPosition] = []
         
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let url = documentsPath.appendingPathComponent(name + ".json")
 
         do {
             let data = try Data(contentsOf: url)
-            result = try JSONDecoder().decode([ChordPosition].self, from: data)
-            return result
+            let result = try JSONDecoder().decode([ChordPosition].self, from: data)
+            completion(result)
         } catch {
             print(error.localizedDescription)
         }
@@ -391,21 +396,21 @@ public struct Chords {
             #if DEBUG
             print("Base url is not set, loading chords from bundle...")
             #endif
-            result = readDataFormBundle(for: name)
-            return result
+            let result = readDataFormBundle(for: name)
+            completion(result)
         } else {
-            await Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
+            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                 if chordPositions.count == 0 {
-                    result = readDataFormBundle(for: name)
+                    let result = readDataFormBundle(for: name)
                     #if DEBUG
                     print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
                     #endif
+                    completion(result)
                 } else {
-                    result = chordPositions
+                    completion(chordPositions)
                 }
             }
         }
-        return result
     }
     
     private static func readDataFormBundle(for name: String) -> [ChordPosition] {
