@@ -347,13 +347,13 @@ public struct Chords {
     }
     
     public static var guitar: [ChordPosition] = []
-    Chords.readData(for: "GuitarChords") { chordPositions in
-        Chords.guitar = chordPositions
+    readData(for: "GuitarChords") { chordPositions in
+        guitar = chordPositions
     }
     
     public static var ukulele: [ChordPosition] = []
-    Chords.readData(for: "UkuleleChords") { chordPositions in
-        Chords.ukulele = chordPositions
+    readData(for: "UkuleleChords") { chordPositions in
+        ukulele = chordPositions
     }
 
     private static func readData(for name: String, completion: @escaping ([ChordPosition]) -> Void) {
@@ -399,7 +399,7 @@ public struct Chords {
             let result = readDataFormBundle(for: name)
             completion(result)
         } else {
-            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
+            loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                 if chordPositions.count == 0 {
                     let result = readDataFormBundle(for: name)
                     #if DEBUG
