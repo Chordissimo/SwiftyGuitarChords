@@ -398,7 +398,7 @@ public struct Chords {
                     print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
                     #endif
                     if chordPositions.count > 0 {
-                        json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
+                        let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
                         let data = Data(json)
                         do {
                             try data.write(to: url, options: [.atomic, .completeFileProtection])
