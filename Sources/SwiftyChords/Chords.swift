@@ -399,7 +399,7 @@ public struct Chords {
                     #endif
                     if chordPositions.count > 0 {
                         let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
-                        let data = Data(json)
+                        let data = Data(json.utf8)
                         do {
                             try data.write(to: url, options: [.atomic, .completeFileProtection])
                         } catch {
