@@ -353,6 +353,17 @@ public struct Chords {
         var result: [ChordPosition] = []
         var baseUrl: String = ""
         
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let url = documentsPath.appendingPathComponent(name + ".json")
+
+        do {
+            let data = try Data(contentsOf: url)
+            let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
+            return allChords
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         struct Plist: Decodable {
             var CHORDS_JSON_BASE_URL: String = ""
             enum CodingKeys: String, CodingKey {
@@ -383,22 +394,28 @@ public struct Chords {
         } else {
             Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
                 if chordPositions.count > 0 {
-                    result = chordPositions
                     #if DEBUG
-                    print("Successfully read from \(baseUrl)/\(name), chords count:", result.count)
+                    print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
                     #endif
+                    if chordPositions.count > 0 {
+                        json = String(data: try JSONEncoder(chordPositions).encode(), encoding: .utf8)!
+                        let data = Data(json)
+                        do {
+                            try data.write(to: url, options: [.atomic, .completeFileProtection])
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                        return chordPositions
+                    } else {
+                        result = readDataFormBundle(for: name)
+                        #if DEBUG
+                        print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+                        #endif
+                        return result
+                    }
                 }
             }
         }
-        
-        if result.count == 0 {
-            result = readDataFormBundle(for: name)
-            #if DEBUG
-            print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
-            #endif
-        }
-
-        return result
     }
     
     private static func readDataFormBundle(for name: String) -> [ChordPosition] {
