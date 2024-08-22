@@ -346,76 +346,25 @@ public struct Chords {
         }
     }
     
-    public static var guitar: [ChordPosition] = []
-    public static var ukulele: [ChordPosition] = []
-
-    init() {
-        Chords.readData(for: "GuitarChords") { chordPositions in
-            Chords.guitar = chordPositions
-        }
-        Chords.readData(for: "UkuleleChords") { chordPositions in
-            Chords.ukulele = chordPositions
-        }
-    }
-
-    private static func readData(for name: String, completion: @escaping ([ChordPosition]) -> Void) {
-        var baseUrl: String = ""
-        
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let url = documentsPath.appendingPathComponent(name + ".json")
-
-        do {
-            let data = try Data(contentsOf: url)
-            let result = try JSONDecoder().decode([ChordPosition].self, from: data)
-            completion(result)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        struct Plist: Decodable {
-            var CHORDS_JSON_BASE_URL: String = ""
-            enum CodingKeys: String, CodingKey {
-                case CHORDS_JSON_BASE_URL
-            }
-        }
-        
-        do {
-            var plistUrl = Bundle.module.resourceURL
-            plistUrl?.appendPathComponent("RemoteJsonUrl-Info")
-            plistUrl?.appendPathExtension("plist")
-            if let path = plistUrl {
-                let data = try Data(contentsOf: path)
-                let plist = try PropertyListDecoder().decode(Plist.self, from: data)
-                baseUrl = plist.CHORDS_JSON_BASE_URL
-            }
-        } catch {
-            #if DEBUG
-            print("Can't read base url from RemoteJsonUrl-Info.plist. File not found.")
-            #endif
-        }
-        
-        if baseUrl == "" {
-            #if DEBUG
-            print("Base url is not set, loading chords from bundle...")
-            #endif
-            let result = readDataFormBundle(for: name)
-            completion(result)
-        } else {
-            Chords.loadRemoteJSON(baseUrl + "/" + name + ".json") { chordPositions in
-                if chordPositions.count == 0 {
-                    let result = readDataFormBundle(for: name)
-                    #if DEBUG
-                    print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
-                    #endif
-                    completion(result)
-                } else {
-                    completion(chordPositions)
-                }
-            }
-        }
-    }
+    public static var guitar: [ChordPosition] = Chords.readData(for: "GuitarChords")
+    public static var ukulele: [ChordPosition] = Chords.readData(for: "UkuleleChords")
     
-    private static func readDataFormBundle(for name: String) -> [ChordPosition] {
+    private static func readData(for name: String) -> [ChordPosition] {
+        do {
+            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            resourceUrl = documentsPath.appendingPathComponent(name)
+            resourceUrl?.appendPathExtension("json")
+            if let fileUrl = resourceUrl {
+                let data = try Data(contentsOf: fileUrl)
+                let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
+                return allChords
+            }
+        } catch {
+            #if DEBUG
+            print("There is no chord data:", error)
+            #endif
+        }
+
         do {
             var resourceUrl = Bundle.module.resourceURL
             resourceUrl?.appendPathComponent(name)
@@ -430,51 +379,8 @@ public struct Chords {
             print("There is no chord data:", error)
             #endif
         }
+        
         return []
-    }
-    
-    private static func loadRemoteJSON(_ urlString: String, completion: @escaping ([ChordPosition]) -> Void) {
-        if let url = URL(string: urlString) {
-            let request = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data {
-                    do {
-                        let chordPositions = try JSONDecoder().decode([ChordPosition].self, from: data)
-                        if chordPositions.count > 0 {
-                            #if DEBUG
-                            print("Successfully loaded JSON from \(urlString), chords count:", chordPositions.count)
-                            #endif
-                            if chordPositions.count > 0 {
-                                let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
-                                let data = Data(json.utf8)
-                                do {
-                                    try data.write(to: url, options: [.atomic, .completeFileProtection])
-                                } catch {
-                                    print(error.localizedDescription)
-                                }
-                                completion(chordPositions)
-                            }
-                        }
-                    } catch {
-                        #if DEBUG
-                        print("Couldn't parse data from \(urlString)\n\(error)")
-                        #endif
-                        completion([])
-                    }
-                } else {
-                    #if DEBUG
-                    print(error?.localizedDescription ?? "Unknown Error")
-                    #endif
-                    completion([])
-                }
-            }
-            task.resume()
-        } else {
-            #if DEBUG
-            print("Invalid URL: \(urlString)")
-            #endif
-            completion([])
-        }
     }
     
 }
