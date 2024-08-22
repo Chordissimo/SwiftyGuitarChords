@@ -346,8 +346,8 @@ public struct Chords {
         }
     }
     
-    public static var guitar = Chords.readData(for: "GuitarChords")
-    public static var ukulele = Chords.readData(for: "UkuleleChords")
+    public static var guitar = await Chords.readData(for: "GuitarChords")
+    public static var ukulele = await Chords.readData(for: "UkuleleChords")
 
     private static func readData(for name: String) async -> [ChordPosition] {
         var result: [ChordPosition] = []
@@ -452,13 +452,13 @@ public struct Chords {
                         #if DEBUG
                         print("Couldn't parse data from \(urlString)\n\(error)")
                         #endif
-                        completion(chordPositions)
+                        completion([])
                     }
                 } else {
                     #if DEBUG
                     print(error?.localizedDescription ?? "Unknown Error")
                     #endif
-                    completion(chordPositions)
+                    completion([])
                 }
             }
             task.resume()
@@ -466,7 +466,7 @@ public struct Chords {
             #if DEBUG
             print("Invalid URL: \(urlString)")
             #endif
-            completion(chordPositions)
+            completion([])
         }
     }
     
