@@ -420,10 +420,10 @@ public struct Chords {
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
-                        let result = try JSONDecoder().decode([ChordPosition].self, from: data)
+                        let chordPositions = try JSONDecoder().decode([ChordPosition].self, from: data)
                         if chordPositions.count > 0 {
                             #if DEBUG
-                            print("Successfully loaded JSON from \(baseUrl)/\(name), chords count:", result.count)
+                            print("Successfully loaded JSON from \(urlString), chords count:", result.count)
                             #endif
                             if chordPositions.count > 0 {
                                 let json = String(data: try JSONEncoder().encode(chordPositions), encoding: .utf8)!
@@ -437,7 +437,7 @@ public struct Chords {
                             } else {
                                 result = readDataFormBundle(for: name)
                                 #if DEBUG
-                                print("Couldn't read from \(baseUrl)/\(name).json. Request result is empty. Loading chords from bundle...")
+                                print("Couldn't read from \(urlString). Request result is empty. Loading chords from bundle...")
                                 #endif
                                 return result
                             }
