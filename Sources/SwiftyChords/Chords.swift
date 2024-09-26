@@ -74,70 +74,86 @@ public struct Chords {
     }
 
     public enum Suffix: String, CaseIterable, Codable, Comparable {
-        case major = "major"
-        case minor = "minor"
-        case dim = "dim"
-        case dimSeven = "dim7"
-        case susTwo = "sus2"
-        case susFour = "sus4"
-        case sevenSusFour = "7sus4"
-        case five = "5"
-        case altered = "alt"
-        case aug = "aug"
-        case six = "6"
-        case sixNine = "6/9"
-        case seven = "7"
-        case sevenFlatFive = "7b5"
-        case augSeven = "aug7"
-        case nine = "9"
-        case nineFlatFive = "9b5"
-        case augNine = "aug9"
-        case sevenFlatNine = "7b9"
-        case sevenSharpNine = "7#9"
-        case eleven = "11"
-        case nineSharpEleven = "9#11"
-        case thirteen = "13"
-        case majorSeven = "maj7"
-        case majorSevenFlatFive = "maj7b5"
-        case majorSevenSharpFive = "maj7#5"
-        case sevenSharpFive = "7#5"
-        case majorNine = "maj9"
-        case majorEleven = "maj11"
-        case majorThirteen = "maj13"
-        case minorSix = "m6"
-        case minorSixNine = "m6/9"
-        case minorSeven = "m7"
-        case minorSevenFlatFive = "m7b5"
-        case minorNine = "m9"
-        case minorEleven = "m11"
-        case minorMajorSeven = "mmaj7"
-        case minorMajorSeventFlatFive = "mmaj7b5"
-        case minorMajorNine = "mmaj9"
-        case minorMajorEleven = "mmaj11"
-        case addNine = "add9"
-        case minorAddNine = "madd9"
-        case slashE = "/E"
-        case slashF = "/F"
-        case slashFSharp = "/F#"
-        case slashG = "/G"
-        case slashGSharp = "/G#"
-        case slashA = "/A"
-        case slashBFlat = "/Bb"
-        case slashB = "/B"
-        case slashC = "/C"
-        case slashCSharp = "/C#"
-        case minorSlashB = "m/B"
-        case minorSlashC = "m/C"
-        case minorSlashCSharp = "m/C#"
-        case slashD = "/D"
-        case minorSlashD = "m/D"
-        case slashDSharp = "/D#"
-        case minorSlashDSharp = "m/D#"
-        case minorSlashE = "m/E"
-        case minorSlashF = "m/F"
-        case minorSlashFSharp = "m/F#"
-        case minorSlashG = "m/G"
-        case minorSlashGSharp = "m/G#"
+        case _major = "major"
+        case _overCSharp = "/c#"
+        case _overD = "/d"
+        case _overDSharp = "/d#"
+        case _overE = "/e"
+        case _overF = "/f"
+        case _overFSharp = "/f#"
+        case _overG = "/g"
+        case _overGSharp = "/g#"
+        case _overA = "/a"
+        case _overASharp = "/a#"
+        case _overB = "/b"
+        case _minor = "minor"
+        case _mOverCSharp = "m/c#"
+        case _mOverD = "m/d"
+        case _mOverDSharp = "m/d#"
+        case _mOverE = "m/e"
+        case _mOverF = "m/f"
+        case _mOverFSharp = "m/f#"
+        case _mOverG = "m/g"
+        case _mOverGSharp = "m/g#"
+        case _mOverA = "m/a"
+        case _mOverASharp = "m/a#"
+        case _mOverB = "m/b"
+        case _dim = "dim"
+        case _aug = "aug"
+        case _sus2 = "sus2"
+        case _sus4 = "sus4"
+        case _majb5 = "majb5"
+        case _mSharp5 = "m#5"
+        case _sus4sharp5 = "sus4#5"
+        case _sus2b5 = "sus2b5"
+        case _sus2sharp5 = "sus2#5"
+        case _7 = "7"
+        case _m7 = "m7"
+        case _maj7 = "maj7"
+        case _mMaj7 = "mmaj7"
+        case _dim7 = "dim7"
+        case _aug7 = "aug7"
+        case _7b5 = "7b5"
+        case _maj7b5 = "maj7b5"
+        case _m7b5 = "m7b5"
+        case _mMaj7b5 = "mmaj7b5"
+        case _m7sharp5 = "m7#5"
+        case _mMaj7sharp5 = "mmaj7#5"
+        case _7b9 = "7b9"
+        case _6 = "6"
+        case _m6 = "m6"
+        case _6b5 = "6b5"
+        case _6add9 = "6add9"
+        case _m6add9 = "m6add9"
+        case _9 = "9"
+        case _m9 = "m9"
+        case _m9OverA = "m9/a"
+        case _maj9 = "maj9"
+        case _mMaj9 = "mmaj9"
+        case _9b5 = "9b5"
+        case _aug9 = "aug9"
+        case _9sus4 = "9sus4"
+        case _7sharp9 = "7#9"
+        case _7sharp9b5 = "7#9b5"
+        case _11 = "11"
+        case _m11 = "m11"
+        case _maj11 = "maj11"
+        case _mMaj11 = "mmaj11"
+        case _majSharp11 = "maj#11"
+        case _13 = "13"
+        case _m13 = "m13"
+        case _maj13 = "maj13"
+        case _mMaj13 = "mmaj13"
+        case _7sus2 = "7sus2"
+        case _maj7sus2 = "maj7sus2"
+        case _7sus4 = "7sus4"
+        case _maj7sus4 = "maj7sus4"
+        case _7sus2sharp5 = "7sus2#5"
+        case _7sus4sharp5 = "7sus4#5"
+        case _5 = "5"
+        case _add9 = "add9"
+        case _overC = "/c"
+        case _mOverC = "m/c"
         
         /// Implement Comparable
         public static func < (lhs: Self, rhs: Self) -> Bool {
@@ -160,157 +176,189 @@ public struct Chords {
         /// Some items may also be identical across types. Only in rare cases will an alt symbol be provided e.g. (`dim⁷`,`°`)
         public var display: (accessible: String, short: String, symbolized: String, altSymbol: String) {
             switch self {
-            case .major:
-                return (" major", "", "", "")
-            case .minor:
-                return (" minor", "m", "m", "m")
-            case .dim:
-                return (" diminished", "dim", "dim", "dim")
-            case .dimSeven:
-                return (" dim seven", "dim7", "dim⁷", "°")
-            case .susTwo:
-                return (" suss two", "sus2", "sus²", "sus²")
-            case .susFour:
-                return (" suss four", "sus4", "sus⁴", "sus⁴")
-            case .sevenSusFour:
-                return (" seven sus four", "7sus4", "⁷sus⁴", "⁷sus⁴")
-            case .five:
-                return (" power", "5", "⁵", "⁵")
-            case .altered:
-                return (" alt", "alt", "alt", "alt")
-            case .aug:
-                return (" augmented", "aug", "aug", "⁺")
-            case .six:
-                return (" six", "6", "⁶", "⁶")
-            case .sixNine:
-                return (" six slash nine", "6/9", "⁶ᐟ⁹", "⁶ᐟ⁹")
-            case .seven:
-                return (" seven", "7", "⁷", "⁷")
-            case .sevenFlatFive:
-                return (" seven flat five", "7b5", "⁷♭⁵", "⁷♭⁵")
-            case .augSeven:
-                return (" org seven", "aug7", "aug⁷", "⁺⁷")
-            case .nine:
-                return (" nine", "9", "⁹", "⁹")
-            case .nineFlatFive:
-                return (" nine flat five", "9b5", "⁹♭⁵", "⁹♭⁵")
-            case .augNine:
-                return (" org nine", "aug9", "aug⁹", "⁺⁹")
-            case .sevenFlatNine:
-                return (" seven flat nine", "7b9", "⁷♭⁹", "⁷♭⁹")
-            case .sevenSharpNine:
-                return (" seven sharp nine", "7#9", "⁷♯⁹", "⁷♯⁹")
-            case .sevenSharpFive:
-                return (" dominant sharp five", "7#5", "⁷♯⁵", "⁷♯⁵")
-            case .eleven:
-                return (" eleven", "11", "¹¹", "¹¹")
-            case .nineSharpEleven:
-                return (" nine sharp eleven", "9#11", "⁹♯¹¹", "⁹♯¹¹")
-            case .thirteen:
-                return (" thirteen", "13", "¹³", "¹³")
-            case .majorSeven:
-                return (" major seven", "maj7", "maj⁷", "M⁷")
-            case .majorSevenFlatFive:
-                return (" major seven flat five", "maj7b5", "maj⁷♭⁵", "M⁷♭⁵")
-            case .majorSevenSharpFive:
-                return (" major seven sharp five", "maj7#5", "maj⁷♯⁵", "M⁷♯⁵")
-            case .majorNine:
-                return (" major nine", "maj9", "maj⁹", "M⁹")
-            case .majorEleven:
-                return (" major eleven", "maj11", "maj¹¹", "M¹¹")
-            case .majorThirteen:
-                return (" major thirteen", "maj13", "maj¹³", "M¹³")
-            case .minorSix:
-                return (" minor six", "m6", "m⁶", "m⁶")
-            case .minorSixNine:
-                return (" minor six slash nine", "m6/9", "m⁶ᐟ⁹", "m⁶ᐟ⁹")
-            case .minorSeven:
-                return (" minor seven", "m7", "m⁷", "m⁷")
-            case .minorSevenFlatFive:
-                return (" minor seven flat five", "m7b5", "m⁷♭⁵", "ø⁷")
-            case .minorNine:
-                return (" minor nine", "m9", "m⁹", "m⁹")
-            case .minorEleven:
-                return (" minor eleven", "m11", "m¹¹", "m¹¹")
-            case .minorMajorSeven:
-                return (" minor major seven", "mMaj7", "mMaj⁷", "mᴹ⁷")
-            case .minorMajorSeventFlatFive:
-                return (" minor major seven flat five", "mMaj7b5", "mMaj⁷♭⁵", "mᴹ⁷♭⁵")
-            case .minorMajorNine:
-                return (" minor major nine", "mMaj9", "mMaj⁹", "mᴹ⁹")
-            case .minorMajorEleven:
-                return (" minor major eleven", "mMaj11", "mMaj¹¹", "mᴹ¹¹")
-            case .addNine:
-                return (" add nine", "add9", "add⁹", "ᵃᵈᵈ⁹")
-            case .minorAddNine:
-                return (" minor add nine", "madd9", "madd⁹", "mᵃᵈᵈ⁹")
-            case .slashE:
-                return (" slash E", "/E", "/E", "/E")
-            case .slashF:
-                return (" slash F", "/F", "/F", "/F")
-            case .slashFSharp:
-                return (" slash F sharp", "/F#", "/F♯", "/F♯")
-            case .slashG:
-                return (" slash G", "/G", "/G", "/G")
-            case .slashGSharp:
-                return (" slash G sharp", "/G#", "/G♯", "/G♯")
-            case .slashA:
-                return (" slash A", "/A", "/A", "/A")
-            case .slashBFlat:
-                return (" slash B flat", "/Bb", "/B♭", "/B♭")
-            case .slashB:
-                return (" slash B", "/B", "/B", "/B")
-            case .slashC:
-                return (" slash C", "/C", "/C", "/C")
-            case .slashCSharp:
-                return (" slash C sharp", "/C#" , "/C♯", "/C♯")
-            case .minorSlashB:
-                return (" minor slash B", "m/B", "m/B", "m/B")
-            case .minorSlashC:
-                return (" minor slash C", "m/C", "m/C", "m/C")
-            case .minorSlashCSharp:
-                return (" minor slash C sharp", "m/C#", "m/C♯", "m/C♯")
-            case .slashD:
-                return (" slash D", "/D", "/D", "/D")
-            case .minorSlashD:
-                return (" minor slash D", "m/D", "m/D", "m/D")
-            case .slashDSharp:
-                return (" slash D sharp", "/D#", "/D♯", "/D♯")
-            case .minorSlashDSharp:
-                return (" minor slash D sharp", "m/D#", "m/D♯", "m/D♯")
-            case .minorSlashE:
-                return (" minor slash E", "m/E", "m/E", "m/E")
-            case .minorSlashF:
-                return (" minor slash F", "m/F", "m/F", "m/F")
-            case .minorSlashFSharp:
-                return (" minor slash F sharp", "m/F#", "m/F♯", "m/F♯")
-            case .minorSlashG:
-                return (" minor slash G", "m/G", "m/G", "m/G")
-            case .minorSlashGSharp:
-                return (" minor slash G sharp", "m/G#", "m/G♯", "m/G♯")
+            case ._major:
+                return ("", "major", "major", "")
+            case ._overCSharp:
+                return ("", "/C#", "/C♯", "")
+            case ._overD:
+                return ("", "/D", "/D", "")
+            case ._overDSharp:
+                return ("", "/D#", "/D♯", "")
+            case ._overE:
+                return ("", "/E", "/E", "")
+            case ._overF:
+                return ("", "/F", "/F", "")
+            case ._overFSharp:
+                return ("", "/F#", "/F♯", "")
+            case ._overG:
+                return ("", "/G", "/G", "")
+            case ._overGSharp:
+                return ("", "/G#", "/G♯", "")
+            case ._overA:
+                return ("", "/A", "/A", "")
+            case ._overASharp:
+                return ("", "/A#", "/A♯", "")
+            case ._overB:
+                return ("", "/B", "/B", "")
+            case ._minor:
+                return ("", "minor", "minor", "")
+            case ._mOverCSharp:
+                return ("", "m/C#", "m/C♯", "")
+            case ._mOverD:
+                return ("", "m/D", "m/D", "")
+            case ._mOverDSharp:
+                return ("", "m/D#", "m/D♯", "")
+            case ._mOverE:
+                return ("", "m/E", "m/E", "")
+            case ._mOverF:
+                return ("", "m/F", "m/F", "")
+            case ._mOverFSharp:
+                return ("", "m/F#", "m/F♯", "")
+            case ._mOverG:
+                return ("", "m/G", "m/G", "")
+            case ._mOverGSharp:
+                return ("", "m/G#", "m/G♯", "")
+            case ._mOverA:
+                return ("", "m/A", "m/A", "")
+            case ._mOverASharp:
+                return ("", "m/A#", "m/A♯", "")
+            case ._mOverB:
+                return ("", "m/B", "m/B", "")
+            case ._dim:
+                return ("", "dim", "dim", "")
+            case ._aug:
+                return ("", "aug", "aug", "")
+            case ._sus2:
+                return ("", "sus2", "sus²", "")
+            case ._sus4:
+                return ("", "sus4", "sus⁴", "")
+            case ._majb5:
+                return ("", "majb5", "maj♭⁵", "")
+            case ._mSharp5:
+                return ("", "m#5", "m♯⁵", "")
+            case ._sus4sharp5:
+                return ("", "sus4#5", "sus⁴♯⁵", "")
+            case ._sus2b5:
+                return ("", "sus2b5", "sus²♭⁵", "")
+            case ._sus2sharp5:
+                return ("", "sus2#5", "sus²♯⁵", "")
+            case ._7:
+                return ("", "7", "⁷", "")
+            case ._m7:
+                return ("", "m7", "m⁷", "")
+            case ._maj7:
+                return ("", "maj7", "maj⁷", "")
+            case ._mMaj7:
+                return ("", "mmaj7", "mmaj⁷", "")
+            case ._dim7:
+                return ("", "dim7", "dim⁷", "")
+            case ._aug7:
+                return ("", "aug7", "aug⁷", "")
+            case ._7b5:
+                return ("", "7b5", "⁷♭⁵", "")
+            case ._maj7b5:
+                return ("", "maj7b5", "maj⁷♭⁵", "")
+            case ._m7b5:
+                return ("", "m7b5", "m⁷♭⁵", "")
+            case ._mMaj7b5:
+                return ("", "mmaj7b5", "mmaj⁷♭⁵", "")
+            case ._m7sharp5:
+                return ("", "m7#5", "m⁷♯⁵", "")
+            case ._mMaj7sharp5:
+                return ("", "mmaj7#5", "mmaj⁷♯⁵", "")
+            case ._7b9:
+                return ("", "7b9", "⁷b⁹", "")
+            case ._6:
+                return ("", "6", "⁶", "")
+            case ._m6:
+                return ("", "m6", "m⁶", "")
+            case ._6b5:
+                return ("", "6b5", "⁶♭⁵", "")
+            case ._6add9:
+                return ("", "6add9", "⁶add⁹", "")
+            case ._m6add9:
+                return ("", "m6add9", "m⁶add⁹", "")
+            case ._9:
+                return ("", "9", "⁹", "")
+            case ._m9:
+                return ("", "m9", "m⁹", "")
+            case ._m9OverA:
+                return ("", "m9/A", "m⁹/A", "")
+            case ._maj9:
+                return ("", "maj9", "maj⁹", "")
+            case ._mMaj9:
+                return ("", "mmaj9", "mmaj⁹", "")
+            case ._9b5:
+                return ("", "9b5", "⁹♭⁵", "")
+            case ._aug9:
+                return ("", "aug9", "aug⁹", "")
+            case ._9sus4:
+                return ("", "9sus4", "⁹sus⁴", "")
+            case ._7sharp9:
+                return ("", "7#9", "⁷♯⁹", "")
+            case ._7sharp9b5:
+                return ("", "7#9b5", "⁷♯⁹♭⁵", "")
+            case ._11:
+                return ("", "11", "¹¹", "")
+            case ._m11:
+                return ("", "m11", "m¹¹", "")
+            case ._maj11:
+                return ("", "maj11", "maj¹¹", "")
+            case ._mMaj11:
+                return ("", "mmaj11", "mmaj¹¹", "")
+            case ._majSharp11:
+                return ("", "maj#11", "maj♯¹¹", "")
+            case ._13:
+                return ("", "13", "¹³", "")
+            case ._m13:
+                return ("", "m13", "m¹³", "")
+            case ._maj13:
+                return ("", "maj13", "maj¹³", "")
+            case ._mMaj13:
+                return ("", "mmaj13", "mmaj¹³", "")
+            case ._7sus2:
+                return ("", "7sus2", "⁷sus²", "")
+            case ._maj7sus2:
+                return ("", "maj7sus2", "maj⁷sus²", "")
+            case ._7sus4:
+                return ("", "7sus4", "⁷sus⁴", "")
+            case ._maj7sus4:
+                return ("", "maj7sus4", "maj⁷sus⁴", "")
+            case ._7sus2sharp5:
+                return ("", "7sus2#5", "⁷sus²♯⁵", "")
+            case ._7sus4sharp5:
+                return ("", "7sus4#5", "⁷sus⁴♯⁵", "")
+            case ._5:
+                return ("", "5", "⁵", "")
+            case ._add9:
+                return ("", "add9", "add⁹", "")
+            case ._overC:
+                return ("", "/C", "/C", "")
+            case ._mOverC:
+                return ("", "m/C", "m/C", "")
             }
         }
-        
         /// Supports a few most popular groupings. Major, Minor, Diminished, Augmented, Suspended.
         /// Please open a PR if you'd like to introduce more types or offer corrections.
         /// Anything that doesn't fit into the above categories are put in `other`.
         ///
         /// The intention for the group is for developers to offer different filter types for chart lookup.
         var group: Chords.Group {
-            switch self {
-            case .major, .majorSeven, .majorSevenFlatFive, .majorSevenSharpFive, .majorNine, .majorEleven, .majorThirteen, .addNine, .slashE, .slashF, .slashFSharp, .slashG, .slashGSharp, .slashA, .slashBFlat, .slashB, .slashC, .slashCSharp, .slashD, .slashDSharp:
-                return .major
-            case .minor, .minorSix, .minorSixNine, .minorSeven, .minorEleven, .minorSevenFlatFive, .minorMajorSeven, .minorMajorSeventFlatFive, .minorMajorNine, .minorMajorEleven, .minorAddNine, .minorSlashB, .minorSlashC, .minorSlashCSharp, .minorSlashD, .minorSlashDSharp, .minorSlashE, .minorSlashF, .minorSlashFSharp, .minorSlashG, .minorNine, .minorSlashGSharp:
-                return .minor
-            case .dim, .dimSeven:
-                return .diminished
-            case .susTwo, .susFour, .sevenSusFour:
-                return .suspended
-            case .aug, .augSeven, .augNine:
-                return .augmented
-            case .altered, .five, .six, .sixNine, .seven, .sevenFlatFive, .nine, .nineFlatFive, .sevenFlatNine, .sevenSharpNine, .eleven, .nineSharpEleven, .thirteen, .sevenSharpFive:
-                return .other
-            }
+            return .other
+//            switch self {
+//            case .major, .majorSeven, .majorSevenFlatFive, .majorSevenSharpFive, .majorNine, .majorEleven, .majorThirteen, .addNine, .slashE, .slashF, .slashFSharp, .slashG, .slashGSharp, .slashA, .slashBFlat, .slashB, .slashC, .slashCSharp, .slashD, .slashDSharp:
+//                return .major
+//            case .minor, .minorSix, .minorSixNine, .minorSeven, .minorEleven, .minorSevenFlatFive, .minorMajorSeven, .minorMajorSeventFlatFive, .minorMajorNine, .minorMajorEleven, .minorAddNine, .minorSlashB, .minorSlashC, .minorSlashCSharp, .minorSlashD, .minorSlashDSharp, .minorSlashE, .minorSlashF, .minorSlashFSharp, .minorSlashG, .minorNine, .minorSlashGSharp:
+//                return .minor
+//            case .dim, .dimSeven:
+//                return .diminished
+//            case .susTwo, .susFour, .sevenSusFour:
+//                return .suspended
+//            case .aug, .augSeven, .augNine:
+//                return .augmented
+//            case .altered, .five, .six, .sixNine, .seven, .sevenFlatFive, .nine, .nineFlatFive, .sevenFlatNine, .sevenSharpNine, .eleven, .nineSharpEleven, .thirteen, .sevenSharpFive:
+//                return .other
+//            }
         }
     }
 
