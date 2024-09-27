@@ -432,11 +432,34 @@ public struct Chords {
             resourceUrl?.appendPathExtension("json")
             if let fileUrl = resourceUrl {
                 let data = try Data(contentsOf: fileUrl)
-                let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
-                #if DEBUG
-                print("Loaded JSON from \(fileUrl.absoluteString), chords count:", allChords.count)
-                #endif
-                return allChords
+                do {
+                    let allChords = try JSONDecoder().decode([ChordPosition].self, from: data)
+                    #if DEBUG
+                    print("Loaded JSON from \(fileUrl.absoluteString), chords count:", allChords.count)
+                    #endif
+                    return allChords
+                    
+                } catch let error as DecodingError {
+                    switch error {
+                    case .keyNotFound(let key, let context):
+                        let path = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                        print("Missing key '\(key.stringValue)' at path \(path), reason: \(context.debugDescription)")
+                    case .typeMismatch(let type, let context):
+                        let path = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                        print("Type '\(type)' mismatch at path \(path), reason: \(context.debugDescription)")
+                    case .valueNotFound(let type, let context):
+                        let path = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                        print("Value of type '\(type)' not found at path \(path), reason: \(context.debugDescription)")
+                    case .dataCorrupted(let context):
+                        let path = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                        print("Data corrupted at path \(path), reason: \(context.debugDescription)")
+                    @unknown default:
+                        print("Unknown decoding error: \(error.localizedDescription)")
+                    }
+                } catch {
+                    print("Another error occurred: \(error)")
+                }
+
             }
         } catch {
             #if DEBUG
