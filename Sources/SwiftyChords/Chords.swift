@@ -154,6 +154,10 @@ public struct Chords {
         case _add9 = "add9"
         case _overC = "/c"
         case _mOverC = "m/c"
+        case _9sharp11 = "9#11"
+        case _maj7sharp5 = "maj7#5"
+        case _7sharp5 = "7#5"
+        case _madd9 = "madd9"
         
         /// Implement Comparable
         public static func < (lhs: Self, rhs: Self) -> Bool {
@@ -336,6 +340,14 @@ public struct Chords {
                 return ("", "/C", "/C", "")
             case ._mOverC:
                 return ("", "m/C", "m/C", "")
+            case ._9sharp11:
+                return ("", "9#11","9#11","⁹♯¹¹")
+            case ._maj7sharp5:
+                return ("", "maj7#5","maj7#5","maj⁷♯⁵")
+            case ._7sharp5:
+                return ("", "7#5","7#5","⁷♯⁵")
+            case ._madd9:
+                return ("", "madd9","madd9","add⁹")
             }
         }
         /// Supports a few most popular groupings. Major, Minor, Diminished, Augmented, Suspended.
