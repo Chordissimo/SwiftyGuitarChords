@@ -355,22 +355,23 @@ public struct Chords {
         /// Anything that doesn't fit into the above categories are put in `other`.
         ///
         /// The intention for the group is for developers to offer different filter types for chart lookup.
-        var group: Chords.Group {
-            return .other
-//            switch self {
-//            case .major, .majorSeven, .majorSevenFlatFive, .majorSevenSharpFive, .majorNine, .majorEleven, .majorThirteen, .addNine, .slashE, .slashF, .slashFSharp, .slashG, .slashGSharp, .slashA, .slashBFlat, .slashB, .slashC, .slashCSharp, .slashD, .slashDSharp:
-//                return .major
-//            case .minor, .minorSix, .minorSixNine, .minorSeven, .minorEleven, .minorSevenFlatFive, .minorMajorSeven, .minorMajorSeventFlatFive, .minorMajorNine, .minorMajorEleven, .minorAddNine, .minorSlashB, .minorSlashC, .minorSlashCSharp, .minorSlashD, .minorSlashDSharp, .minorSlashE, .minorSlashF, .minorSlashFSharp, .minorSlashG, .minorNine, .minorSlashGSharp:
-//                return .minor
-//            case .dim, .dimSeven:
-//                return .diminished
-//            case .susTwo, .susFour, .sevenSusFour:
-//                return .suspended
-//            case .aug, .augSeven, .augNine:
-//                return .augmented
-//            case .altered, .five, .six, .sixNine, .seven, .sevenFlatFive, .nine, .nineFlatFive, .sevenFlatNine, .sevenSharpNine, .eleven, .nineSharpEleven, .thirteen, .sevenSharpFive:
-//                return .other
-//            }
+        public var group: Chords.Group {
+            switch self {
+            case ._11,._13,._6,._6add9,._6b5,._7,._7b5,._7b9,._7sharp5,._7sharp9,._7sharp9b5,._7sus2,._7sus2sharp5,._7sus4,._7sus4sharp5,._9,._9b5,._9sharp11,._9sus4, ._maj11,._maj13,._maj7,._maj7b5,._maj7sharp5,._maj7sus2,._maj7sus4,._maj9,._majb5,._major,._majSharp11,._overA,._overASharp,._overB,._overC,._overCSharp,._overD,._overDSharp,._overE,._overF,._overFSharp,._overG,._overGSharp:
+                return .major
+            case ._m11,._m13,._m6,._m6add9,._m7,._m7b5,._m7sharp5,._m9,._m9OverA,._madd9,._minor,._mMaj11,._mMaj13,._mMaj7,._mMaj7b5,._mMaj7sharp5,._mMaj9,._mOverA,._mOverASharp,._mOverB,._mOverC,._mOverCSharp,._mOverD,._mOverDSharp,._mOverE,._mOverF,._mOverFSharp,._mOverG,._mOverGSharp,._mSharp5:
+                return .minor
+            case ._dim, ._dim7:
+                return .diminished
+            case ._sus2, ._sus4, ._sus2b5, ._sus2sharp5, ._sus4sharp5:
+                return .suspended
+            case ._aug, ._aug7, ._aug9:
+                return .augmented
+            case ._5:
+                return .other
+            default:
+                return .major
+            }
         }
     }
 
